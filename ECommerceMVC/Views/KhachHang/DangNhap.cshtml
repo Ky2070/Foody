@@ -1,0 +1,53 @@
+﻿@model ECommerceMVC.ViewModels.LoginVM
+
+@{
+    ViewData["Title"] = "Đăng Nhập";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml"; // Hoặc layout phù hợp với giao diện của bạn
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
+                </div>
+            }
+
+            <form asp-action="DangNhap" asp-route-returnurl="@ViewBag.ReturnUrl">
+                <div class="form-group mb-3">
+                    <label asp-for="UserName" class="form-label">Tên Đăng Nhập</label>
+                    <input asp-for="UserName" class="form-control" placeholder="Nhập tên đăng nhập" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Password" class="form-label">Mật Khẩu</label>
+                    <input asp-for="Password" class="form-control" type="password" placeholder="Nhập mật khẩu" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+               @*  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="form-check">
+                        <input asp-for="RememberMe" type="checkbox" class="form-check-input" id="rememberMe" />
+                        <label class="form-check-label" asp-for="RememberMe">Nhớ tôi</label>
+                    </div>
+                    <a asp-controller="KhachHang" asp-action="QuenMatKhau" class="text-primary">Quên mật khẩu?</a>
+                </div> *@
+
+                <button type="submit" class="btn btn-primary w-100">Đăng Nhập</button>
+            </form>
+
+            <div class="text-center mt-3">
+                <p>Bạn chưa có tài khoản?</p>
+                <a asp-controller="KhachHang" asp-action="DangKy" class="btn btn-outline-primary">Đăng Ký Ngay</a>
+            </div>
+        </div>
+    </div>
+</div>

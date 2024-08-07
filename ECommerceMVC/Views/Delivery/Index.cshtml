@@ -1,0 +1,149 @@
+﻿@using ECommerceMVC.Helpers
+@model IEnumerable<ECommerceMVC.ViewModels.DeliveryStatusVM>
+
+@{
+    ViewData["Title"] = "Delivery Status";
+    Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+<!-- Thêm Toastr CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+<!-- Thêm Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Hiển thị thông báo toast -->
+<script>
+    $(document).ready(function () {
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <text>
+                toastr.success('@TempData["SuccessMessage"]');
+        </text>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <text>
+                toastr.error('@TempData["ErrorMessage"]');
+        </text>
+    }
+            });
+</script>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Order Date</th>
+            <th>Delivery Date</th>
+            <th>Status</th>
+            <th>Payment Method</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="@(item.TenTrangThai == "Đã giao hàng" ? "table-success" : "")">
+                <td>@item.MaHd</td>
+                <td>@item.HoTen</td>
+                <td>@item.NgayDat.ToShortDateString()</td>
+                <td>@(item.NgayGiao.HasValue ? item.NgayGiao.Value.ToShortDateString() : "N/A")</td>
+                <td>@item.TenTrangThai</td>
+                <td>@item.CachThanhToan</td>
+                <td>
+                    <form asp-action="UpdateStatus" method="post" class="d-flex align-items-center">
+                        <input type="hidden" name="maHd" value="@item.MaHd" />
+                        <select name="trangThaiId" class="form-select me-2">
+                            @foreach (var status in ViewBag.Statuses)
+                            {
+                                var isDisabled = (item.TenTrangThai == "Đã thanh toán" || item.TenTrangThai == "Chờ giao hàng" || item.TenTrangThai == "Đã giao hàng") && (status.MaTrangThai == 0 || status.MaTrangThai == -1);
+                                @Html.Raw(HtmlHelperExtensions.DisabledOption(Html, status.MaTrangThai, status.TenTrangThai, isDisabled))
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-success" @(item.TenTrangThai == "Đã giao hàng" ? "disabled" : "")>Update</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+@*  @using ECommerceMVC.Helpers
+@model IEnumerable<ECommerceMVC.ViewModels.DeliveryStatusVM>
+
+@{
+    ViewData["Title"] = "Delivery Status";
+    Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+<!-- Thêm Toastr CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+<!-- Thêm Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<h2>@ViewData["Title"]</h2>
+
+<!-- Hiển thị thông báo toast -->
+<script>
+    $(document).ready(function () {
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <text>
+                toastr.success('@TempData["SuccessMessage"]');
+        </text>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <text>
+                toastr.error('@TempData["ErrorMessage"]');
+        </text>
+    }
+        });
+</script>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Order Date</th>
+            <th>Delivery Date</th>
+            <th>Status</th>
+            <th>Payment Method</th> <!-- Thêm cột Payment Method -->
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaHd</td>
+                <td>@item.HoTen</td>
+                <td>@item.NgayDat.ToShortDateString()</td>
+                <td>@(item.NgayGiao.HasValue ? item.NgayGiao.Value.ToShortDateString() : "N/A")</td>
+                <td>@item.TenTrangThai</td>
+                <td>@item.CachThanhToan</td> <!-- Hiển thị phương thức thanh toán -->
+                <td>
+                    <form asp-action="UpdateStatus" method="post" class="d-flex align-items-center">
+                        <input type="hidden" name="maHd" value="@item.MaHd" />
+                        <select name="trangThaiId" class="form-select me-2">
+                            @foreach (var status in ViewBag.Statuses)
+                            {
+                                <option value="@status.MaTrangThai">@status.TenTrangThai</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-success">Update</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table> *@

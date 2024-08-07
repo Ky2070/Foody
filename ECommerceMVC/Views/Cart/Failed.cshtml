@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Order Failed";
+}
+
+@section Styles {
+    <style>
+        .failed-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            text-align: center;
+            background-color: #f8d7da;
+            padding: 20px;
+        }
+
+        .failed-message {
+            max-width: 500px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .failed-icon {
+            font-size: 6rem;
+            background-color: #dc3545;
+            border-radius: 50%;
+            padding: 20px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .failed-icon svg {
+                width: 60px;
+                height: 60px;
+            }
+
+        .failed-message h1 {
+            color: #dc3545;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .failed-message p {
+            color: #6c757d;
+        }
+
+        .failed-message .btn {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: #fff;
+        }
+
+            .failed-message .btn:hover {
+                background-color: #c82333;
+                border-color: #bd2130;
+            }
+    </style>
+}
+
+<div class="failed-container">
+    <div class="failed-message">
+        <div class="failed-icon">
+            <!-- Biểu tượng lỗi: hình tròn đỏ với dấu X -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16" width="100" height="100">
+                <circle cx="8" cy="8" r="8" fill="#dc3545" /> <!-- Hình tròn đỏ -->
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 6.707l2.646-2.646a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707 5.354 11.354a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" fill="#fff" />
+            </svg>
+        </div>
+        <h1>Đặt hàng không thành công</h1>
+        <p>Rất tiếc, đã xảy ra lỗi trong quá trình đặt hàng của bạn.</p>
+        <p>Vui lòng thử lại sau hoặc liên hệ với bộ phận hỗ trợ khách hàng.</p>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary mt-3">Quay lại trang chủ</a>
+    </div>
+</div>

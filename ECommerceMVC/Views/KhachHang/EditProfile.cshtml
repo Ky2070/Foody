@@ -1,0 +1,73 @@
+﻿@model ECommerceMVC.ViewModels.ProfileVM
+
+@{
+    ViewData["Title"] = "Chỉnh sửa Hồ sơ";
+}
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <h1 class="mb-4">Chỉnh sửa Hồ sơ</h1>
+
+        <!-- Thông báo thành công hoặc thất bại -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["ErrorMessage"]
+            </div>
+        }
+
+        <form asp-action="EditProfile" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-item">
+                        <label asp-for="HoTen" class="form-label my-3"></label><sup>*</sup>
+                        <input asp-for="HoTen" class="form-control" />
+                        <span asp-validation-for="HoTen" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-item">
+                        <label asp-for="DiaChi" class="form-label my-3"></label>
+                        <input asp-for="DiaChi" class="form-control" />
+                        <span asp-validation-for="DiaChi" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-item">
+                        <label asp-for="DienThoai" class="form-label my-3"></label><sup>*</sup>
+                        <input asp-for="DienThoai" class="form-control" />
+                        <span asp-validation-for="DienThoai" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-item">
+                        <label asp-for="Email" class="form-label my-3"></label><sup>*</sup>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-item">
+                        <label class="form-label my-3" for="Hinh">Hình đại diện</label>
+                        <input type="file" name="Hinh" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-12 text-center pt-4">
+                    <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Cập nhật Hồ sơ</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ECommerceMVC.Data.NhanVien>
+
+@{
+    ViewData["Title"] = "Danh Sách Nhân Viên";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 class="mb-4">Danh Sách Nhân Viên</h1>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Mã Nhân Viên</th>
+                <th>Tên Nhân Viên</th>
+                <th>Email</th>
+                <th>Hành Động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var nhanVien in Model)
+            {
+                <tr>
+                    <td>@nhanVien.MaNv</td>
+                    <td>@nhanVien.HoTen</td>
+                    <td>@nhanVien.Email</td>
+                    <td>
+                        <a href="@Url.Action("EditNhanVien", "Admin", new { id = nhanVien.MaNv })" class="btn btn-warning btn-sm me-2">
+                            <i class="bi bi-pencil"></i> Xác nhận
+                        </a>
+                        <form method="post" action="@Url.Action("DeleteNhanVien", "Admin", new { id = nhanVien.MaNv })" class="d-inline" onsubmit="return confirmDelete();">
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i> Xóa
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        function confirmDelete() {
+            return confirm('Bạn có chắc chắn muốn xóa nhân viên này không?');
+        }
+    </script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+}

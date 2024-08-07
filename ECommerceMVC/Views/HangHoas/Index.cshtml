@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ECommerceMVC.ViewModels.HangHoaVM>
+
+@{
+    ViewData["Title"] = "Danh Sách Sản Phẩm";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Danh Sách Sản Phẩm</h1>
+
+    <p>
+        <a asp-action="Create" class="btn btn-primary mb-3">Tạo Sản Phẩm Mới</a>
+    </p>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Hình Ảnh</th>
+                    <th>Tên Sản Phẩm</th>
+                    <th>Đơn Giá</th>
+                    <th>Mô Tả Ngắn</th>
+                    <th>Danh Mục</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.Hinh))
+                            {
+                                <img src="@Url.Content("~/Hinh/hanghoa/" + item.Hinh)" alt="Product Image" style="max-width: 100px; max-height: 100px;" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Content("~/images/default.png")" alt="No Image" style="max-width: 100px; max-height: 100px;" />
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.TenHH)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DonGia)</td>
+                        <td>@Html.DisplayFor(modelItem => item.MoTaNgan)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TenLoai)</td>
+                        <td>
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.MaHh" class="btn btn-secondary btn-sm">Sửa</a>
+                                <a asp-action="Details" asp-route-id="@item.MaHh" class="btn btn-info btn-sm">Chi Tiết</a>
+                                <a asp-action="Delete" asp-route-id="@item.MaHh" class="btn btn-danger btn-sm">Xóa</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .btn-group .btn {
+        margin-right: 5px;
+    }
+
+        .btn-group .btn:last-child {
+            margin-right: 0;
+        }
+</style>

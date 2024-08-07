@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ECommerceMVC.ViewModels.HangHoaVM>
+
+@{
+    ViewData["Title"] = "Fruitables Shop";
+    Layout = "_DanhSachHangHoa";
+}
+
+<!-- Single Page Header start -->
+@section BreadCum {
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">Shop</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item text-primary"><a href="#">Home</a></li>
+            <li class="breadcrumb-item text-primary"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active text-white">Shop</li>
+        </ol>
+    </div>
+}
+<!-- Single Page Header End -->
+@await Html.PartialAsync("ProductItem", Model)
+
+<div class="col-12">
+    <div class="pagination d-flex justify-content-center mt-5">
+        <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)" asp-route-loai="@ViewBag.Loai" class="@(ViewBag.CurrentPage == 1 ? "disabled" : "") rounded">&laquo;</a>
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <a asp-action="Index" asp-route-page="@i" asp-route-loai="@ViewBag.Loai" class="@(i == ViewBag.CurrentPage ? "active" : "") rounded">@i</a>
+        }
+        <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)" asp-route-loai="@ViewBag.Loai" class="@(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "") rounded">&raquo;</a>
+    </div>
+</div>
+
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: black;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+            .pagination a.active {
+                background-color: #007bff;
+                color: white;
+                border: 1px solid #007bff;
+            }
+
+            .pagination a.disabled {
+                pointer-events: none;
+                color: #ccc;
+            }
+</style>

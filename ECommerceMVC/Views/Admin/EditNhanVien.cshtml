@@ -1,0 +1,77 @@
+﻿@model ECommerceMVC.Data.NhanVien
+
+@{
+    ViewData["Title"] = "Chỉnh Sửa Nhân Viên";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Chấp nhận nhân viên đã đăng ký</h1>
+
+    <form asp-action="EditNhanVien" method="post" class="needs-validation" novalidate>
+        <!-- Trường ẩn cho MaNv -->
+        <input type="hidden" asp-for="MaNv" />
+
+        <!-- Trường Tên Nhân Viên -->
+        <div class="mb-3">
+            <label asp-for="HoTen" class="form-label"></label>
+            <input asp-for="HoTen" class="form-control" />
+            <div class="invalid-feedback">
+                <span asp-validation-for="HoTen"></span>
+            </div>
+        </div>
+
+        <!-- Trường Email -->
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <div class="invalid-feedback">
+                <span asp-validation-for="Email"></span>
+            </div>
+        </div>
+
+        <!-- Trường Hiệu Lực -->
+        <div class="mb-3 form-check">
+            <input asp-for="HieuLuc" type="checkbox" class="form-check-input" id="hieuluc" />
+            <label asp-for="HieuLuc" class="form-check-label" for="hieuluc"></label>
+        </div>
+
+        <!-- Trường Vai Trò (nếu có) -->
+        <div class="mb-3">
+            <label asp-for="VaiTro" class="form-label"></label>
+            <select asp-for="VaiTro" class="form-select">
+                <option value="1">Admin</option>
+                <option value="0">Employee</option>
+                <!-- Thêm các tùy chọn khác nếu cần -->
+            </select>
+            <div class="invalid-feedback">
+                <span asp-validation-for="VaiTro"></span>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Cập Nhật</button>
+            <a href="@Url.Action("NhanViens", "Admin")" class="btn btn-secondary">Trở Về</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        // Vô hiệu hóa gửi biểu mẫu nếu có lỗi
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+}

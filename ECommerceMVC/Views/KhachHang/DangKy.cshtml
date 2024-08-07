@@ -1,0 +1,101 @@
+﻿@model ECommerceMVC.ViewModels.RegisterVM
+
+@{
+    ViewData["Title"] = "Đăng Ký";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml"; // Hoặc layout phù hợp với giao diện của bạn
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+
+            <!-- Thông báo thành công hoặc thất bại -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
+            <form asp-action="DangKy" enctype="multipart/form-data" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="MaKh" class="form-label">Mã Khách Hàng</label>
+                        <input asp-for="MaKh" class="form-control" placeholder="Nhập mã khách hàng" />
+                        <span asp-validation-for="MaKh" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="MatKhau" class="form-label">Mật Khẩu</label>
+                        <input asp-for="MatKhau" type="password" class="form-control" placeholder="Nhập mật khẩu" />
+                        <span asp-validation-for="MatKhau" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label asp-for="HoTen" class="form-label">Họ Tên</label>
+                        <input asp-for="HoTen" class="form-control" placeholder="Nhập họ tên" />
+                        <span asp-validation-for="HoTen" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <div class="form-check">
+                            <input asp-for="GioiTinh" type="checkbox" class="form-check-input" id="genderMale" />
+                            <label class="form-check-label" for="genderMale">Nam</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="NgaySinh" class="form-label">Ngày Sinh</label>
+                        <input asp-for="NgaySinh" type="date" class="form-control" />
+                        <span asp-validation-for="NgaySinh" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label asp-for="DiaChi" class="form-label">Địa Chỉ</label>
+                        <input asp-for="DiaChi" class="form-control" placeholder="Nhập địa chỉ" />
+                        <span asp-validation-for="DiaChi" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="DienThoai" class="form-label">Điện Thoại</label>
+                        <input asp-for="DienThoai" class="form-control" placeholder="Nhập số điện thoại" />
+                        <span asp-validation-for="DienThoai" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="Email" class="form-label">Email</label>
+                        <input asp-for="Email" type="email" class="form-control" placeholder="Nhập email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="form-label" for="Hinh">Ảnh Đại Diện</label>
+                        <input type="file" name="Hinh" class="form-control" />
+                    </div>
+
+                    <div class="form-group col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary w-100">Đăng Ký</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="text-center mt-3">
+                <p>Đã có tài khoản?</p>
+                <a asp-controller="KhachHang" asp-action="DangNhap" class="btn btn-outline-secondary">Đăng Nhập Ngay</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

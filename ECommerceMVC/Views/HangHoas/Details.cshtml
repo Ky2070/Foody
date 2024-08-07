@@ -1,0 +1,50 @@
+﻿@model ECommerceMVC.ViewModels.ChiTietHangHoaVM
+
+@{
+    ViewData["Title"] = "Chi Tiết Sản Phẩm";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">@Model.TenHH</h1>
+
+    <div class="row">
+        <!-- Phần hình ảnh sản phẩm -->
+        <div class="col-md-6">
+            <div class="card">
+                <img src="@Url.Content("~/Hinh/HangHoa/" + Model.Hinh)" alt="Product Image" class="card-img-top img-fluid" />
+            </div>
+        </div>
+
+        <!-- Phần thông tin sản phẩm -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.TenHH</h5>
+                    <p class="card-text">
+                        <strong>Danh Mục:</strong> @Model.TenLoai
+                    </p>
+                    <p class="card-text">
+                        <strong>Đơn Giá:</strong> @Model.DonGia.ToString("C")
+                    </p>
+                    <p class="card-text">
+                        <strong>Mô Tả Ngắn:</strong> @Model.MoTaNgan
+                    </p>
+                    <p class="card-text">
+                        <strong>Chi Tiết:</strong> @Model.ChiTiet
+                    </p>
+                    <p class="card-text">
+                        <strong>Đánh Giá:</strong> @Model.DiemDanhGia
+                    </p>
+                    <p class="card-text">
+                        <strong>Số Lượng Tồn:</strong> @Model.SoLuongTon
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.MaHh" class="btn btn-primary">Chỉnh Sửa</a>
+        <a asp-action="Index" class="btn btn-secondary">Trở Lại Danh Sách</a>
+    </div>
+</div>

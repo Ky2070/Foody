@@ -1,0 +1,94 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+<!-- Thêm Toastr CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
+<!-- Thêm Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">Employee Dashboard</h3>
+                </div>
+                <div class="card-body">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="col-md-4">
+                            <div class="card mb-3">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Admin Dashboard</h5>
+                                    <p class="card-text">View and manage the orders here.</p>
+                                    <a href="/Admin/Dashboard" class="btn btn-primary">Go to Admin Page</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (User.IsInRole("Employee"))
+                    {
+                        <p class="lead">Welcome to the Employee Page!</p>
+                        <div class="alert alert-info">
+                            <strong>Note:</strong> Make sure to check the latest updates and tasks assigned to you.
+                        </div>
+                        <!-- Example of adding some cards for quick links -->
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card mb-3">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">Update Status</h5>
+                                        <p class="card-text">Update order statuses as needed.</p>
+                                        <a href="/Delivery/Index" class="btn btn-primary">Update Status</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card mb-3">
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title">Profile Settings</h5>
+                                        <p class="card-text">View and update your profile settings.</p>
+                                        <a href="/NhanVien/Profile" class="btn btn-primary">Profile Settings</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">
+                            <strong>Warning:</strong> You are not logged in. Please <a href="/Account/Login" class="alert-link">login</a> to access employee features.
+                        </div>
+                        <div class="text-center mt-4">
+                            <h4>Login to access your dashboard</h4>
+                            <a href="/NhanVien/Login" class="btn btn-primary">Login</a>
+                        </div>
+                    }
+                </div>
+                <div class="card-footer text-muted text-center">
+                    &copy; 2024 Your Company Name
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hiển thị thông báo toast -->
+<script>
+    $(document).ready(function () {
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <text>
+                toastr.success('@TempData["SuccessMessage"]');
+        </text>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <text>
+                toastr.error('@TempData["ErrorMessage"]');
+        </text>
+    }
+                });
+</script>

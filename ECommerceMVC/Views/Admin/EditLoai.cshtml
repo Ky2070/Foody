@@ -1,0 +1,27 @@
+﻿@model ECommerceMVC.Data.Loai
+
+@{
+    ViewData["Title"] = "Chỉnh Sửa Danh Mục";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Chỉnh Sửa Danh Mục</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="form-group">
+                    <label for="TenLoai">Tên Loại</label>
+                    <input type="text" id="TenLoai" name="TenLoai" class="form-control" value="@Model.TenLoai" placeholder="Nhập tên danh mục mới" required />
+                </div>
+                <input type="hidden" name="MaLoai" value="@Model.MaLoai" />
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Lưu</button>
+                    <a href="@Url.Action("DanhMucs", "Admin")" class="btn btn-secondary btn-lg">Trở Về</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

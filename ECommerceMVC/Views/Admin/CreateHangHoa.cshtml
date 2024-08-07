@@ -1,0 +1,43 @@
+﻿@model ECommerceMVC.Data.HangHoa
+
+@{
+    ViewData["Title"] = "Tạo Hàng Hóa Mới";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Tạo Hàng Hóa Mới</h1>
+
+@if (ViewData["CreateSuccess"] != null)
+{
+    if ((bool)ViewData["CreateSuccess"])
+    {
+        <div class="alert alert-success" role="alert">
+            Hàng hóa đã được tạo thành công!
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            Tạo hàng hóa không thành công. Vui lòng kiểm tra lại thông tin và thử lại.
+        </div>
+    }
+}
+
+<form asp-action="CreateHangHoa" method="post">
+    <div class="form-group">
+        <label asp-for="TenHh" class="control-label"></label>
+        <input asp-for="TenHh" class="form-control" />
+        <span asp-validation-for="TenHh" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DonGia" class="control-label"></label>
+        <input asp-for="DonGia" class="form-control" />
+        <span asp-validation-for="DonGia" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Tạo Mới</button>
+        <a href="@Url.Action("HangHoas", "Admin")" class="btn btn-secondary">Trở Về</a>
+    </div>
+</form>

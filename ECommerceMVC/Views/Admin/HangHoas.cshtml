@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ECommerceMVC.Data.HangHoa>
+
+@{
+    ViewData["Title"] = "Danh Sách Hàng Hóa";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        Danh Sách Hàng Hóa
+    </div>
+    <div class="card-body">
+        <a href="@Url.Action("CreateHangHoa", "Admin")" class="btn btn-primary mb-3">Tạo Hàng Hóa Mới</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mã Hàng Hóa</th>
+                    <th>Tên Hàng Hóa</th>
+                    <th>Giá</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var hangHoa in Model)
+                {
+                    <tr>
+                        <td>@hangHoa.MaHh</td>
+                        <td>@hangHoa.TenHh</td>
+                        <td>@hangHoa.DonGia</td>
+                        <td>
+                            <a href="@Url.Action("EditHangHoa", "Admin", new { id = hangHoa.MaHh })" class="btn btn-warning btn-sm">Sửa</a>
+                            <form method="post" action="@Url.Action("DeleteHangHoa", "Admin", new { id = hangHoa.MaHh })" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa hàng hóa này không?');">
+                                <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

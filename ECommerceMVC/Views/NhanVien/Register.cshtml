@@ -1,0 +1,68 @@
+﻿@model ECommerceMVC.ViewModels.EmployeeRegisterVM
+
+@{
+    ViewData["Title"] = "Đăng Ký Nhân Viên";
+    Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <h2 class="text-center mb-4">@ViewData["Title"]</h2>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Register" enctype="multipart/form-data" method="post">
+                        <div class="form-group mb-3">
+                            <label asp-for="MaNv" class="form-label">Mã Nhân Viên</label>
+                            <input asp-for="MaNv" class="form-control" placeholder="Nhập mã nhân viên" />
+                            <span asp-validation-for="MaNv" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="HoTen" class="form-label">Họ Tên</label>
+                            <input asp-for="HoTen" class="form-control" placeholder="Nhập họ tên" />
+                            <span asp-validation-for="HoTen" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" type="email" placeholder="Nhập email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="MatKhau" class="form-label">Mật Khẩu</label>
+                            <input asp-for="MatKhau" class="form-control" type="password" placeholder="Nhập mật khẩu" />
+                            <span asp-validation-for="MatKhau" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary">Đăng Ký</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a asp-action="Login">Đã có tài khoản? Đăng nhập</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

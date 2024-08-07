@@ -1,0 +1,39 @@
+﻿@model ECommerceMVC.ViewModels.HangHoaVM
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Xóa Sản Phẩm</h1>
+
+    <div class="alert alert-warning">
+        <h4 class="alert-heading">Xác Nhận Xóa</h4>
+        <p>Bạn sắp xóa sản phẩm: <strong>@Model.TenHH</strong>. Hành động này không thể hoàn tác. Vui lòng xác nhận để tiếp tục.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            @if (!string.IsNullOrEmpty(Model.Hinh))
+            {
+                <img src="@Url.Content("~/Hinh/hanghoa/" + Model.Hinh)" alt="Product Image" class="img-fluid rounded" />
+            }
+            else
+            {
+                <img src="@Url.Content("~/images/default.png")" alt="No Image" class="img-fluid rounded" />
+            }
+        </div>
+        <div class="col-md-8">
+            <p><strong>Tên Sản Phẩm:</strong> @Model.TenHH</p>
+            <p><strong>Đơn Giá:</strong> @Model.DonGia.ToString("C")</p>
+            <p><strong>Mô Tả Ngắn:</strong> @Model.MoTaNgan</p>
+            <p><strong>Danh Mục:</strong> @Model.TenLoai</p>
+        </div>
+    </div>
+
+    <form asp-action="Delete" method="post" class="mt-4">
+        <input type="hidden" asp-for="MaHh" />
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

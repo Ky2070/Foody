@@ -1,0 +1,98 @@
+﻿@model IEnumerable<ECommerceMVC.ViewModels.OrderStatusVM>
+
+@{
+    ViewBag.Title = "Order Status";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Order Status</h2>
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var order in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card border-primary">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title">
+                                <i class="fas fa-box"></i> Order ID: @order.MaHd
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Tên khách hàng:</strong> @order.HoTen</p>
+                            <p><strong>Địa chỉ nhận hàng:</strong> @order.DiaChi</p>
+                            <p><strong>Số điện thoại:</strong> @order.DienThoai</p>
+                            <p><strong>Phương thức thanh toán:</strong> @order.CachThanhToan</p>
+                            <p><strong>Phương thức vận chuyển:</strong> @order.CachVanChuyen</p>
+                            <p><strong>Phí vận chuyển:</strong> @order.PhiVanChuyen.ToString("C")</p>
+                            <div class="d-flex align-items-center mt-3">
+                                <i class="fas fa-info-circle me-2" aria-hidden="true"></i>
+                                <span class="fw-bold">Status:</span>
+                                @if (order.TenTrangThai == "Mới đặt hàng")
+                                {
+                                    <span class="badge bg-warning text-dark ms-2">Mới đặt hàng</span>
+                                }
+                                else if (order.TenTrangThai == "Đã thanh toán")
+                                {
+                                    <span class="badge bg-primary text-white ms-2">Đơn hàng đã được thanh toán trực tuyến</span>
+                                }
+                                else if (order.TenTrangThai == "Chờ giao hàng")
+                                {
+                                    <span class="badge bg-info text-dark ms-2">Đang giao hàng</span>
+                                }
+                                else if (order.TenTrangThai == "Đã giao hàng")
+                                {
+                                    <span class="badge bg-success text-white ms-2">Đã giao hàng</span>
+                                }
+                                else if (order.TenTrangThai == "Khách hàng hủy đơn hàng")
+                                {
+                                    <span class="badge bg-danger text-white ms-2">Đã hủy đơn hàng</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary text-white ms-2">Unknown</span>
+                                }
+                            </div>
+                            <p class="mt-3"><strong>Description:</strong> @order.MoTa</p>
+
+                            <!-- Hiển thị thông tin chi tiết hàng hóa -->
+                            <h5 class="mt-4">Chi tiết đơn hàng</h5>
+                            @if (order.ChiTietHds.Any())
+                            {
+                                <div class="list-group">
+                                    @foreach (var item in order.ChiTietHds)
+                                    {
+                                        <a href="#" class="list-group-item list-group-item-action">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h5 class="mb-1">@item.TenHangHoa</h5>
+                                                <small>@item.ThanhTien.ToString("C")</small>
+                                            </div>
+                                            <p class="mb-1">
+                                                Giá tiền: @item.DonGia.ToString("C")<br />
+                                                Số lượng: @item.SoLuong<br />
+                                                Giảm giá: @item.GiamGia.ToString("C")
+                                            </p>
+                                        </a>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <p>No items found for this order.</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            <i class="fas fa-exclamation-circle fa-3x mb-3"></i>
+            <h4 class="alert-heading">No Orders Found</h4>
+            <p>It looks like you don't have any orders yet. Please check back later or make a new order.</p>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Back to Home</a>
+        </div>
+    }
+</div>

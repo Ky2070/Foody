@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ECommerceMVC.Data.Loai>
+
+@{
+    ViewData["Title"] = "Danh Sách Danh Mục";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Danh Sách Danh Mục</h5>
+        </div>
+        <div class="card-body">
+            <a href="@Url.Action("CreateLoai", "Admin")" class="btn btn-success mb-3">Tạo Danh Mục Mới</a>
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Mã Loại</th>
+                        <th>Tên Loại</th>
+                        <th>Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var loai in Model)
+                    {
+                        <tr>
+                            <td>@loai.MaLoai</td>
+                            <td>@loai.TenLoai</td>
+                            <td>
+                                <a href="@Url.Action("EditLoai", "Admin", new { id = loai.MaLoai })" class="btn btn-warning btn-sm">Sửa</a>
+                                <form method="post" action="@Url.Action("DeleteLoai", "Admin", new { id = loai.MaLoai })" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa mục này không?');">
+                                    <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function confirmDelete() {
+            return confirm('Bạn có chắc chắn muốn xóa mục này không?');
+        }
+    </script>
+}

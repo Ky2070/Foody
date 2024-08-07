@@ -1,0 +1,101 @@
+﻿@* @model ECommerceMVC.ViewModels.ProfileVM
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- User Profile Picture -->
+            <div class="card">
+                @if (!string.IsNullOrEmpty(Model.Hinh))
+                {
+                    <img src="~/Hinh/KhachHang/@Model.Hinh" class="card-img-top" alt="Profile Picture">
+                }
+                else
+                {
+                    <img src="~/images/default-profile.png" class="card-img-top" alt="Default Profile Picture">
+                }
+                <div class="card-body text-center">
+                    <h5 class="card-title">@Model.HoTen</h5>
+                    <p class="card-text">Customer</p>
+                    <a asp-controller="KhachHang" asp-action="EditProfile" class="btn btn-primary">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <!-- User Information -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    Personal Information
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Name: @Model.HoTen</h5>
+                    <p class="card-text"><strong>Phone:</strong> @Model.DienThoai</p>
+                    <p class="card-text"><strong>Address:</strong> @Model.DiaChi</p>
+                </div>
+            </div>
+            <!-- Additional Information -->
+            <div class="card">
+                <div class="card-header">
+                    Account Details
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><strong>Member since:</strong> @Model.NgaySinh.ToString("MMMM dd, yyyy")</p>
+                </div>
+            </div>
+            <!-- Logout Button -->
+            <div class="mt-3 text-right">
+                <a asp-action="DangXuat" class="btn btn-danger">Đăng xuất <i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+ *@
+
+ @model ECommerceMVC.ViewModels.ProfileVM
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- User Profile Picture -->
+            <div class="card">
+                <img src="/Hinh/KhachHang/man.jpg" class="card-img-top" alt="Profile Picture">
+                <div class="card-body text-center">
+                    <h5 class="card-title">@Model.HoTen</h5>
+                    <p class="card-text">Customer</p>
+                    <a asp-controller="KhachHang" asp-action="EditProfile" class="btn btn-primary">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <!-- User Information -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    Personal Information
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.HoTen</h5>
+                    <p class="card-text">@Model.DienThoai</p>
+                    <p class="card-text">@Model.DiaChi</p>
+                </div>
+            </div>
+            <!-- Additional Information -->
+            <div class="card">
+                <div class="card-header">
+                    Account Details
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><strong>Member since:</strong> @Model.NgaySinh.ToString("MMMM dd, yyyy")</p>
+                </div>
+            </div>
+            <!-- Logout Button -->
+            <div class="mt-3 text-right">
+                <a asp-action="DangXuat" class="btn btn-danger">Đăng Xuất <i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+    </div>
+</div>

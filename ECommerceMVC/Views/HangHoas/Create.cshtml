@@ -1,0 +1,88 @@
+﻿@model ECommerceMVC.ViewModels.HangHoaVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Tạo sản phẩm mới</h1>
+
+<h4>Thông tin sản phẩm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                <strong>Lỗi!</strong> Đã xảy ra lỗi khi tạo sản phẩm. Vui lòng kiểm tra lại các thông tin.
+            </div>
+        }
+
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="TenHH" class="control-label"></label>
+                <input asp-for="TenHH" class="form-control" />
+                <span asp-validation-for="TenHH" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DonGia" class="control-label"></label>
+                <input asp-for="DonGia" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="DonGia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTaNgan" class="control-label"></label>
+                <input asp-for="MoTaNgan" class="form-control" />
+                <span asp-validation-for="MoTaNgan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hinh" class="control-label"></label>
+                <input type="file" class="form-control" id="fileInput" />
+                <input asp-for="Hinh" type="text" id="fileName" class="form-control" readonly />
+                <span asp-validation-for="Hinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaLoai" class="control-label"></label>
+                <select asp-for="MaLoai" class="form-control" asp-items="ViewBag.MaLoai" onchange="updateTenLoai()"></select>
+                <span asp-validation-for="MaLoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenLoai" class="control-label"></label>
+                <input asp-for="TenLoai" class="form-control" readonly />
+                <span asp-validation-for="TenLoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script type="text/javascript">
+        function updateTenLoai() {
+            var maLoai = document.querySelector('select[name="MaLoai"]').value;
+            var tenLoaiInput = document.querySelector('input[name="TenLoai"]');
+
+            // Tìm tên loại tương ứng từ ViewBag.MaLoai
+            var tenLoai = document.querySelector('select[name="MaLoai"] option[value="' + maLoai + '"]').text;
+            tenLoaiInput.value = tenLoai;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            updateTenLoai();
+        });
+
+        // Hiển thị tên file đã chọn
+        document.getElementById('fileInput').addEventListener('change', function () {
+            var fileName = this.files.length > 0 ? this.files[0].name : '';
+            document.getElementById('fileName').value = fileName;
+        });
+    </script>
+}

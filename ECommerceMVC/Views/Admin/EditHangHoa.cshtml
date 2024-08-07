@@ -1,0 +1,38 @@
+﻿@model ECommerceMVC.Data.HangHoa
+
+@{
+    ViewData["Title"] = "Chỉnh Sửa Hàng Hóa";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<h1>Chỉnh Sửa Hàng Hóa</h1>
+
+<form asp-action="EditHangHoa" method="post">
+    <input type="hidden" asp-for="MaHh" />
+
+    <div class="form-group">
+        <label asp-for="TenHh" class="control-label"></label>
+        <input asp-for="TenHh" class="form-control" />
+        <span asp-validation-for="TenHh" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DonGia" class="control-label"></label>
+        <input asp-for="DonGia" class="form-control" />
+        <span asp-validation-for="DonGia" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Cập Nhật</button>
+        <a asp-action="HangHoas" class="btn btn-secondary">Trở Về</a>
+    </div>
+</form>
+
+@if (ViewData["UpdateSuccess"] != null && !(bool)ViewData["UpdateSuccess"])
+{
+    <div class="alert alert-danger" role="alert">
+        Cập nhật không thành công. Vui lòng kiểm tra lại thông tin và thử lại.
+    </div>
+}
+

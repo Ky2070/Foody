@@ -1,0 +1,46 @@
+﻿@model ECommerceMVC.ViewModels.EmployeeProfileVM
+
+@{
+    ViewData["Title"] = "Employee Profile";
+    Layout = "~/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header">
+            Profile Information
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="mb-3">
+                    <label asp-for="HoTen" class="form-label"></label>
+                    <input asp-for="HoTen" class="form-control" readonly />
+                    <span asp-validation-for="HoTen" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" readonly />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="VaiTro" class="form-label">Role</label>
+                    <input asp-for="VaiTro" class="form-control" readonly />
+                    <span asp-validation-for="VaiTro" class="text-danger"></span>
+                </div>
+                <!-- Add more fields here if needed -->
+            </form>
+        </div>
+        <div class="card-footer">
+            <a asp-controller="Home" asp-action="EmployeePage" class="btn btn-primary">Back</a>
+        </div>
+    </div>
+</div>
