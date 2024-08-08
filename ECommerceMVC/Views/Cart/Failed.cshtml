@@ -71,6 +71,7 @@
             </svg>
         </div>
         <h1>Đặt hàng không thành công</h1>
+        <h3 class="text-danger">@TempData["Message"]</h3>
         <p>Rất tiếc, đã xảy ra lỗi trong quá trình đặt hàng của bạn.</p>
         <p>Vui lòng thử lại sau hoặc liên hệ với bộ phận hỗ trợ khách hàng.</p>
         <a href="@Url.Action("Index", "Home")" class="btn btn-primary mt-3">Quay lại trang chủ</a>
