@@ -1,9 +1,11 @@
 ﻿using ECommerceMVC.Data;
+using ECommerceMVC.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Linq;
+using System.IO;
 
 namespace ECommerceMVC.Controllers
 {
@@ -87,19 +89,55 @@ namespace ECommerceMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateHangHoa(HangHoa hangHoa)
+        public async Task<IActionResult> CreateHangHoa(HangHoaVM hangHoaVM, IFormFile HinhFile)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                db.HangHoas.Add(hangHoa);
-                db.SaveChanges();
-                ViewData["CreateSuccess"] = true; // Thiết lập thành công
-                return RedirectToAction("HangHoas");
+                return View(hangHoaVM);
             }
 
-            ViewData["CreateSuccess"] = false; // Cập nhật không thành công
-            return View(hangHoa);
+            try
+            {
+                if (HinhFile == null || HinhFile.Length == 0)
+                {
+                    ViewData["HinhError"] = "Vui lòng chọn hình ảnh.";
+                    return View(hangHoaVM);
+                }
+
+                var fileName = Path.GetFileName(HinhFile.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Hinh/HangHoa", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await HinhFile.CopyToAsync(stream);
+                }
+
+                var hangHoa = new HangHoa
+                {
+                    MaHh = hangHoaVM.MaHh,
+                    TenHh = hangHoaVM.TenHH,
+                    DonGia = hangHoaVM.DonGia,
+                    Hinh = fileName,
+                    MoTa = hangHoaVM.MoTaNgan,
+                    MaLoai = hangHoaVM.MaLoai
+                };
+
+                db.HangHoas.Add(hangHoa);
+                await db.SaveChangesAsync();
+
+                ViewData["CreateSuccess"] = true;
+                return RedirectToAction("HangHoas");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Có lỗi xảy ra: " + ex.Message);
+                Console.WriteLine("Chi tiết lỗi: " + ex.StackTrace);
+
+                ViewData["HinhError"] = "Có lỗi xảy ra khi tạo hàng hóa. Vui lòng thử lại sau.";
+                return View(hangHoaVM);
+            }
         }
+
 
 
         [HttpPost]

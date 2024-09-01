@@ -1,4 +1,4 @@
-﻿@model ECommerceMVC.Data.HangHoa
+﻿@model ECommerceMVC.ViewModels.HangHoaVM
 
 @{
     ViewData["Title"] = "Tạo Hàng Hóa Mới";
@@ -23,11 +23,11 @@
     }
 }
 
-<form asp-action="CreateHangHoa" method="post">
+<form asp-action="CreateHangHoa" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label asp-for="TenHh" class="control-label"></label>
-        <input asp-for="TenHh" class="form-control" />
-        <span asp-validation-for="TenHh" class="text-danger"></span>
+        <label asp-for="TenHH" class="control-label"></label>
+        <input asp-for="TenHH" class="form-control" />
+        <span asp-validation-for="TenHH" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -37,7 +37,58 @@
     </div>
 
     <div class="form-group">
+        <label class="control-label">Hình Ảnh</label>
+        <input type="file" name="HinhFile" class="form-control" id="Hinh" accept="image/*" onchange="previewImage(event)" />
+        <span class="text-danger">@ViewData["HinhError"]</span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MoTaNgan" class="control-label"></label>
+        <textarea asp-for="MoTaNgan" class="form-control"></textarea>
+        <span asp-validation-for="MoTaNgan" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TenLoai" class="control-label"></label>
+        <input asp-for="TenLoai" class="form-control" />
+        <span asp-validation-for="TenLoai" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <img id="preview" src="#" alt="Xem trước hình ảnh" style="display:none; width:200px; height:auto;" />
+    </div>
+
+    <div class="form-group">
         <button type="submit" class="btn btn-primary">Tạo Mới</button>
         <a href="@Url.Action("HangHoas", "Admin")" class="btn btn-secondary">Trở Về</a>
     </div>
 </form>
+
+@section Scripts {
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('preview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        document.querySelector('form').addEventListener('submit', function (e) {
+            const fileInput = document.getElementById('Hinh');
+            if (fileInput.files.length === 0) {
+                e.preventDefault();
+                alert('Vui lòng chọn hình ảnh.');
+            }
+        });
+
+        @if (ViewData["HinhError"] != null)
+        {
+            <text>
+                console.error('@ViewData["HinhError"]');
+            </text>
+        }
+    </script>
+}

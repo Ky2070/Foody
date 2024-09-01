@@ -11,13 +11,13 @@
     </div>
     <div class="card-body">
         <a href="@Url.Action("CreateHangHoa", "Admin")" class="btn btn-primary mb-3">Tạo Hàng Hóa Mới</a>
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Mã Hàng Hóa</th>
                     <th>Tên Hàng Hóa</th>
                     <th>Giá</th>
-                    <th>Hành Động</th>
+                    <th>Hình Ảnh</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +26,10 @@
                     <tr>
                         <td>@hangHoa.MaHh</td>
                         <td>@hangHoa.TenHh</td>
-                        <td>@hangHoa.DonGia</td>
+                        <td>@String.Format("{0:0,0 VNĐ}", hangHoa.DonGia)</td>
+                        <td>
+                            <img src="~/Hinh/HangHoa/@hangHoa.Hinh" alt="Hình ảnh của @hangHoa.TenHh" style="width: 100px;" />
+                        </td>
                         <td>
                             <a href="@Url.Action("EditHangHoa", "Admin", new { id = hangHoa.MaHh })" class="btn btn-warning btn-sm">Sửa</a>
                             <form method="post" action="@Url.Action("DeleteHangHoa", "Admin", new { id = hangHoa.MaHh })" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa hàng hóa này không?');">
